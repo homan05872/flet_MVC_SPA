@@ -1,13 +1,23 @@
 import flet as ft
 from .sidebar import Sidebar
+from .header import Header
 
 class AppLayout(ft.Row):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, page:ft.Page, *args, **kwargs):
         """ アプリのレイアウト生成
         """
-        # サイドバー
+        # アプリウィンドウ
+        self.page = page
+        
+        # アプリウィンドウ全体の設定
+        self.page.title = "Flet MVC SPA Sample"
+        self.page.padding = 0
+        
+        # ヘッダー生成&配置
+        self.page.appbar = Header(page)
+        # サイドバー生成
         self.sidebar = Sidebar(self)
-        # サイドバーを折りたたむボタン
+        # サイドバーを折りたたむボタン生成
         self.toggle_nav_rail_button = ft.IconButton(
             icon=ft.icons.ARROW_CIRCLE_LEFT,
             icon_color=ft.colors.BLUE_GREY_400,
@@ -15,21 +25,20 @@ class AppLayout(ft.Row):
             selected_icon=ft.icons.ARROW_CIRCLE_RIGHT,  # selectedがTrueの時に表示するアイコン
             on_click=self.toggle_nav_rail
         )
-        # メインコンテンツ
+        # メインコンテンツ生成
         self._active_view :ft.Control = ft.Column(
             controls=[ft.Container(ft.Text("Active View"),margin=10)],
             alignment="center",
             horizontal_alignment="center",
         )
-        # AppLayoutへ作成したUI要素を配置
-        controls = [
-            self.sidebar,                   # サイドバー
-            self.toggle_nav_rail_button,    # サイドバー表示・非表示切替
-            self._active_view               # メインコンテンツ
-        ]
-        # UI生成
+        
+        # 上記で生成したUI要素を配置        
         super().__init__(
-            controls=controls,
+            controls= [
+                self.sidebar,                   # サイドバー
+                self.toggle_nav_rail_button,    # サイドバー表示・非表示切替
+                self._active_view               # メインコンテンツ
+            ],
             tight=True,
             expand=True,
             vertical_alignment="start",

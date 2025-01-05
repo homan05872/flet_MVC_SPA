@@ -2,9 +2,8 @@ import flet as ft
 
 
 class Page1View(ft.UserControl):
-    def __init__(self, controller, data):
+    def __init__(self, data):
         super().__init__()
-        self.controller = controller
         self.message_text = ft.Text(data["message"])  # 初期化
 
     def build_ui(self):
@@ -21,14 +20,12 @@ class Page1View(ft.UserControl):
                     ],
                     alignment="center",
                 ),
-                # bgcolor=ft.colors.DEEP_ORANGE_50,   
         )
     
 
 class Page2View(ft.UserControl):
-    def __init__(self, controller, *args):
+    def __init__(self, *args):
         super().__init__()
-        self.controller = controller
 
     def build_ui(self):
         self.label = ft.Text("Page 2", size=30)
@@ -49,6 +46,5 @@ class Page2View(ft.UserControl):
                     ],
                     alignment="center",
                 ),
-                # bgcolor=ft.colors.DEEP_ORANGE_50,
         )
     

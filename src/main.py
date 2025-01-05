@@ -2,18 +2,13 @@ import flet as ft
 from models import AppModel
 from controllers import Page1Controller, Page2Controller
 from common_widgets.app_layout import AppLayout
-from common_widgets.header import Header
 
-def main(page: ft.Page):
-    # ページ全体の設定
-    page.title = "Flet MVC SPA Sample"
-    page.padding = 0
-    # page.bgcolor = ft.colors.LIGHT_BLUE_50
-    # page.theme_mode = ft.ThemeMode.DARK
+def main(page: ft.Page):    
+    # 共通で使用するレイアウト定義
+    app_layout = AppLayout(page) # アプリレイアウト　※ヘッダー&サイドバー&メインコンテンツ
     
-    # 共通ウィジェット定義
-    page.appbar = Header(page)   # ヘッダー
-    app_layout = AppLayout(page) # アプリレイアウト　※サイドバー&メインコンテンツ
+    # アプリレイアウト(app_layout)をアプリウィンドウに配置
+    page.add(app_layout)
     
     # Model, Controllerの初期化 ※ViewはAppController内で行う
     model = AppModel()
@@ -27,9 +22,6 @@ def main(page: ft.Page):
     def route_change(e: ft.RouteChangeEvent):
         route_settings[page.route].show()   
     page.on_route_change = route_change
-    
-    # アプリレイアウト(app_layout)をアプリウィンドウに配置
-    page.add(app_layout)
     
     # 初期ページを表示
     page.go("/")

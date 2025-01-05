@@ -15,7 +15,7 @@ class BaseController(ABC):
     def show(self) -> None:
         # データをビューに送る
         data = self.send_view_data()
-        self.view = self.ViewClass(self, data) # 引数で受け取ったビュークラスのインスタンス化(引数でデータを渡す)
+        self.view = self.ViewClass(data) # 引数で受け取ったビュークラスのインスタンス化(引数でデータを渡す)
         # メインコンテンツを次のページのUI生成
         self.app_layout.active_view = self.view.build_ui()
         # イベント設定
@@ -61,32 +61,3 @@ class Page2Controller(BaseController):
     def save_message(self, e):
         new_message = self.view.input_field.value
         self.model.set_message(new_message)
-        
-# class AppController:
-#     def __init__(self, model, page:ft.Page, app_layout):
-#         self.model = model
-#         self.page = page
-#         self.app_layout = app_layout
-#         self.page1_view = None
-#         self.page2_view = None
-
-#     def set_view_event (self):
-#         self.page1_view.navigate_button.on_click = lambda _: self.page.go("/page2")
-#         self.page2_view.navigate_button.on_click = lambda _: self.page.go("/")
-#         self.page2_view.save_button.on_click = self.save_message
-        
-#     def go_to_page1(self, e):
-#         message = self.model.get_message()
-#         self.page1_view = Page1View(self, message)
-#         self.app_layout.active_view = self.page1_view.build_ui()
-#         self.set_view_event()
-#         # self.page1_view.update_message(message)
-
-#     def go_to_page2(self, e):
-#         self.page2_view = Page2View(self)
-#         self.app_layout.active_view = self.page2_view
-#         self.set_view_event()
-
-#     def save_message(self, e):
-#         new_message = self.page2_view.input_field.value
-#         self.model.set_message(new_message)
